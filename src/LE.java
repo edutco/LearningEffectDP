@@ -125,8 +125,6 @@ public class LE {
 									couple c=m[j][r][upperVal(cur.getX())][upperVal(cur.getY()) ];
 									if(c==null || c.getX()==-1 ) {
 										String s=  j+" "+r+" "+cur.getX()+" "+cur.getY()+" "+cur.s+"\n";
-										if (s.contains("5 2 10"))//.811768653485844 32.932843614836955  2 4")
-												//System.out.println();
 										if(!lis.contains(s)) {
 											l++;
 											lis.add(s);
