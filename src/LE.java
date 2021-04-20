@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.Collections;
 public class LE {
 	/**
-	 * this class is the basic most generic algorithm for learning & aging effect on 2 machines when the function for mission j in the k place is (p_j*(k^a))
+	 * this class is the basic most generic algorithm for learning & aging effect on 2 machines 
+	 * when the function for mission j in the k place is (p_j*(k^a))
 	 * by DP algorithm
 	 *
 	 */
-	static int missionsNum=10;
+	static int missionsNum=20;
 	static double  price[]= new double[missionsNum+1];
-	static int  times[]= {0,4,5,20,21,43,44,67,68,14,15};
+	static int  times[]= {0,2,4,5,7,8,2,4,5,7,8,2,4,5,7,8,2,4,5,7,8 };
 	static double a= -0.32;
 
 

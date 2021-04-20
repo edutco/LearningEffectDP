@@ -3,7 +3,6 @@ public class couple {
 	private double x,y;
 	public String s;
 	public couple() {
-		//null;
 		this.x = -1;
 		this.y=-1;
 		s="";
@@ -17,7 +16,6 @@ public class couple {
 		this.x = other.x;
 		this.y=other.y;
 		s=new String(other.s);
-		//s=other.s;
 	}
 	public couple(double x, double y, String _s) {
 		this.x = x;
@@ -43,7 +41,6 @@ public class couple {
 	}
 	public static couple min(couple a, couple b) {
 		double aMax, bMax;
-		
 		aMax= Double.max(a.x, a.y);
 		bMax= Double.max(b.x, b.y);
 		if( aMax !=-1 && bMax ==-1)
@@ -57,6 +54,21 @@ public class couple {
 		return new couple();
 			
 	}
+	public static couple minM1(couple a, couple b) {
+		double aMax, bMax;
+		aMax= Double.max(a.x, a.y);
+		bMax= Double.max(b.x, b.y);
+		if( aMax !=-1 && bMax ==-1)
+			return a;
+		if( aMax ==-1 && bMax !=-1)
+			return b;
+		if(aMax !=-1 && bMax !=-1) {
+			if(a.x < b.x) return a;
+			return b;
+		}
+		return new couple();
+			
+	}
 	
 	public String toString() {
 		return "("+x+","+y+")";//  s="+s;
@@ -65,11 +77,13 @@ public class couple {
 		return Double.max(x,y);
 	}
 	public void addY(double c) {
-		y+=c;
+		if(y!=-1 && x!=-1)
+			y+=c;
 		
 	}
 	public void addX(double c) {
-		x+=c;
+		if(y!=-1 && x!=-1)
+			x+=c;
 		
 	}
 }

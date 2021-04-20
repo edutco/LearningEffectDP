@@ -1,15 +1,21 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class IntegerMatrixLE {
+public class IntegerMatrixMinimizeM1 {
 	/**
 		 * this class is the basic most generic algorithm for learning & aging effect on 2 machines when the function for mission j in the k place is (p_j*(k^a))
 		 * by DP algorithm
-		 *
+		 * the main difference is that here we try to minimize only M1
+		 * here every spot in the matrix  
+		 * m[j][r][p][e] is 
+		 * j- number of missions in total
+		 * r- number of missions for M1
+		 * p- sum of all origin missions times that are M1 responsibility 
+		 * e- sum of all origin missions times that are M2 responsibility
 		 */
-		static int missionsNum=10;
+		static int missionsNum=15;
 		static double  price[]= new double[missionsNum+1];
-		static int  times[]= {0,5,6,8,9,5,5,8,1,6,9};
+		static int  times[]= {0,1,1,1,2,4,5,5,5,6,6,8,8,9,9,12};
 		static double a= -0.32;
 
 
@@ -24,10 +30,11 @@ public class IntegerMatrixLE {
 				for(int r=0; r<=j; r++) {
 					for(int p=0; p<=f; p++) {
 						for( int e=0; e<=f; e++) {
-							if(j==1 && r==1 &&p==1 &&e==0)
-								System.out.println();
+							
+							m[j][r][p][e]= new couple();
+							if(j==15 && r==8 &&p==42 &&e==40)
+								System.out.println("here");
 							if(p+e != sum(j,times)) {
-								m[j][r][p][e]= new couple();
 								continue;
 							}
 							if(j==r ) { //M1 should take 1-j first jobs if possible
@@ -37,17 +44,16 @@ public class IntegerMatrixLE {
 										oneToj+=" "+i;
 									m[j][r][p][e]= new couple(price[j],0, oneToj); //all jobs go to M1
 								}
-								else m[j][r][p][e]= new couple();
 								continue;
 							}
 							if(r==0 ) {//M2 should take 1-j first jobs if possible
 								if(e==sum(j,times) )
 									m[j][r][p][e]= new couple(0,price[j]); // all jobs go to M2
-								else m[j][r][p][e]= new couple();
+								
 								continue;
 							}
 							if((e==0 && j!=r) || (p==0 && r!=0)) {  // M1 or M2 is out of time and no out of jobs
-								m[j][r][p][e]=new couple();
+								
 								continue;
 							}
 							boolean M1=(p-times[j]>=0); //p can pay for job j in place (r)
@@ -73,7 +79,7 @@ public class IntegerMatrixLE {
 									M2Ans= new couple(M2origin.getX(), M2origin.getY(), M2origin.s);
 								}
 							}
-							couple ans=couple.min(M1Ans, M2Ans); //choose better option
+							couple ans=couple.minM1(M1Ans, M2Ans); //choose better option
 							m[j][r][p][e]=ans;
 						}
 					}
@@ -135,12 +141,7 @@ public class IntegerMatrixLE {
 
 		public static void main(String[] args) {
 			Arrays.sort(times);
-			for (int i = 0; i < times.length; i++) {
-				System.out.println(times[i]);
-			}
-			for (int i = 0; i < times.length; i++) {
-				System.out.println(sum(i,times));
-			}
+			
 			if(a>0) {
 				int n=times.length;
 				for(int i=1; i<(n+1)/2; i++) {
