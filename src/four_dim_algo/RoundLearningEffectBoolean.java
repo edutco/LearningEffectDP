@@ -1,67 +1,72 @@
+package four_dim_algo;
 import java.util.ArrayList;
 import java.util.Arrays;
 /**
  * this class solves the rounded learning effect on 2 machines when the learning function
  *  for mission j in the k place is upperVal(p_j*(k^a))
- * by DP algorithm and 3D matrix
- * m[j][r][p]=x
- * s.t. if we set M1 to get r jobs with makespan <= p, M2 gets j-r jobs with makespan x (the minimum that is possible)
+ * by DP algorithm and boolean matrix
  *
  */
 
-public class RoundLE3dim {
+public class RoundLearningEffectBoolean {
 
 	static int missionsNum=13;
 	static int  price[]= new int[missionsNum+1];
 	static int  times[]= {0,4,7,3,5,6,9,5,2,3,4,5,6,1};
-	static double a=-0.32;
+	static double a=0.32;
 
 
 
 
 
-	public static void IntMat() {
+	public static void BoolMat() {
 		int f= (int) (price[missionsNum])+1; //upper bound for answer
-		int m[][][]= new int [missionsNum+1][missionsNum+1][f+1];
+		Boolean m[][][][]= new Boolean [missionsNum+1][missionsNum+1][f+1][f+1];
 		for(int j=0; j<missionsNum+1; j++) {
-			for(int r=0; r<missionsNum+1; r++) {
-				for(int p=0; p<=f; p++) {		
-						m[j][r][p]= Integer.MAX_VALUE;
-						if(r>j)
-							continue;
-						if(j==r) { //M1 should take j first jobs if possible
+			for(int r=0; r<=j; r++) {
+				for(int p=0; p<=f; p++) {
+					for( int e=0; e<=f; e++) {
+						m[j][r][p][e]= false;
+						if(j==r ) { //M1 should take j first jobs if possible
 							if(p>=price[j]) {
-								m[j][r][p]=0;//.copy(price[j],0, oneToJ(j)); //all jobs go to M1
+								m[j][r][p][e]=true;//.copy(price[j],0, oneToJ(j)); //all jobs go to M1
 							}
 							continue;
 						}
-						if(r==0) {//M2 should take j first jobs if possible
-								m[j][r][p]=price[j];//.copy(0,price[j],""); // all jobs go to M2
+						if(r==0 ) {//M2 should take j first jobs if possible
+							if(e>=price[j])
+								m[j][r][p][e]=true;//.copy(0,price[j],""); // all jobs go to M2
 							continue;
 						}
-						if(p==0 && r!=0) {  // M1 or M2 is out of time and no out of jobs
+						if((e==0 && j!=r) || (p==0 && r!=0)) {  // M1 or M2 is out of time and no out of jobs
 							continue;
 						}
 						boolean M1=(p-calc(j,r)>=0); //p can pay for job j in place (r)
-						int ansM1=Integer.MAX_VALUE;
+						Boolean ansM1=false;
 						int newP=0;
 						if(M1) {
 							newP=p-calc(j,r); //after paying for job j how much time is left for M1
-							ansM1=m[j-1][r-1][newP];
+							ansM1=m[j-1][r-1][newP][e];
 							}
-							int ansM2=m[j-1][r][p];
-							if(ansM2!=Integer.MAX_VALUE)
-								ansM2+=calc(j,j-r);					
-						m[j][r][p]=Integer.min(ansM1 , ansM2);
+						Boolean ansM2=false;
+						int newE=0;
+						boolean M2=(e-calc(j,j-r)>=0);//e can pay for job j in place (j-r)
+						if(M2) {
+							newE=e-calc(j,j-r); //after paying for job j how much time is left for M2
+							ansM2=(m[j-1][r][p][newE]);
+						}
+						
+						m[j][r][p][e]=(ansM1 || ansM2);
 					}
 				}
 			}
-		
+		}
 		int ans=Integer.MAX_VALUE;
 		for(int i=1; i<=f ; i++) {
 			for(int r=0; r<=missionsNum  ; r++) {
-				if(ans > Integer.max(m[missionsNum][r][i], i) ) {
-						ans=Integer.max(m[missionsNum][r][i], i); 
+				if(m[missionsNum][r][i][i] ) {
+					if(i < ans)
+						ans=i; 
 				}
 			}
 		}
@@ -124,8 +129,9 @@ public class RoundLE3dim {
 		price[0]=0;
 		for(int i=1; i<price.length; i++){
 			price[i]=upperVal(times[i]*Math.pow(i,a))+price[i-1];
+
 		}
-		IntMat();
+		BoolMat();
 
 
 	}

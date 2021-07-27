@@ -1,3 +1,4 @@
+package four_dim_algo;
 import java.util.ArrayList;
 import java.util.Arrays;
 /**
@@ -9,11 +10,20 @@ import java.util.Arrays;
 
 public class RoundLearningEffect {
 
-	static int missionsNum=13;
+	static int missionsNum=4;
 	static int  price[]= new int[missionsNum+1];
-	static int  times[]= {0,4,7,3,5,6,9,5,2,3,4,5,6,1};
-	static double a=0.32;
+	static int  times[]= {0,10,10,10,100};
+	static double a=-0.5;
 
+	 // Bold
+    public static final String BLACK_BOLD = "\033[1;30m";  // BLACK
+    public static final String RED_BOLD = "\033[1;31m";    // RED
+    public static final String GREEN_BOLD = "\033[1;32m";  // GREEN
+    public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
+    public static final String BLUE_BOLD = "\033[1;34m";   // BLUE
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+    public static final String CYAN_BOLD = "\033[1;36m";   // CYAN
+    public static final String WHITE_BOLD = "\033[1;37m";  // WHITE
 
 
 
@@ -78,6 +88,30 @@ public class RoundLearningEffect {
 			}
 		}
 		System.out.println(ans+"\nC_max= "+ ans.max()+"\n"+ divide(ans.s));
+//		for(int j=0; j<missionsNum+1; j++) {
+//			for(int r=0; r<=j; r++) {
+//				System.out.println("\n*********************\n\nj= "+j+" r= "+r);
+//				System.out.print("p\\e ");
+//				for (int i = 0; i < 11; i++) {
+//					System.out.print(" "+i+" ");
+//				}
+//				System.out.println();
+//				for(int p=0; p<=f; p++) {
+//					if(p!=10)
+//						System.out.print(p+":  ");
+//					else
+//						System.out.print(p+": ");
+//					for( int e=0; e<=f; e++) {
+//						if(m[j][r][p][e].getX()!=-1)
+//							System.out.print(" T ");
+//						else
+//							System.out.print(" F ");
+//						
+//					}
+//					System.out.println();
+//					}
+//			}
+//		}
 	}
 
 	private static String oneToJ(int j) {
@@ -139,8 +173,7 @@ public class RoundLearningEffect {
 
 		}
 		numaricMat();
-
-
+	
 	}
 }
 

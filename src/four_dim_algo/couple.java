@@ -1,3 +1,4 @@
+package four_dim_algo;
 
 public class couple {
 	private double x,y;
@@ -74,6 +75,8 @@ public class couple {
 		return "("+x+","+y+")";//  s="+s;
 	}
 	public double max() {
+		if(x==-1 || y==-1)
+			return Double.MAX_VALUE;
 		return Double.max(x,y);
 	}
 	public void addY(double c) {

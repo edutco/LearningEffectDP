@@ -1,3 +1,4 @@
+package four_dim_algo;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,9 +10,9 @@ public class LE {
 	 * by DP algorithm
 	 *
 	 */
-	static int missionsNum=20;
+	static int missionsNum=6;
 	static double  price[]= new double[missionsNum+1];
-	static int  times[]= {0,2,4,5,7,8,2,4,5,7,8,2,4,5,7,8,2,4,5,7,8 };
+	static int  times[]= {0,1,2,4,5,10,12};
 	static double a= -0.32;
 
 
